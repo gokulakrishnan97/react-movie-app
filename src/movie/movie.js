@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { getMovies } from '.././services/fakeMovieService';
-
+import Like from '../common/like';
 export default class Movie extends Component{
     state = {
             movieDetail: getMovies(),
-            titles: ['Title', 'Genre', 'Stock', 'Rental rate']
+            titles: ['Title', 'Genre', 'Stock', 'Rental rate'],
+            like: 'fa fa-heart-o'
         };
 
     listStyle(){
@@ -29,6 +30,14 @@ export default class Movie extends Component{
         let movies = this.state.movieDetail.filter(m => m._id !== movie._id);
         this.setState({movieDetail: movies})
     }
+
+    handleLike = (movie) => {
+        let movies = [ ...this.state.movieDetail ];
+        let index = movies.indexOf(movie);
+        movies[index] = { ...movies[index] };
+        movies[index].liked = !movies[index].liked;
+        this.setState({ movieDetail: movies })
+    }
     getMovies = ()=> {
         let movie = this.state.movieDetail.map((movie)=>{
             return (
@@ -38,6 +47,7 @@ export default class Movie extends Component{
                     <td>{movie.genre.name}</td>
                     <td>{movie.numberInStock}</td>
                     <td>{movie.dailyRentalRate}</td>
+                    <td> <Like onClick={this.handleLike} liked={movie.liked} movie={movie}/> </td>
                     <td><button className='btn btn-danger' onClick= { () => this.deleteMovie(movie) }>delete</button></td>
                 </tr>
                 </tbody>

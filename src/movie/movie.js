@@ -4,8 +4,7 @@ import Like from '../common/like';
 export default class Movie extends Component{
     state = {
             movieDetail: getMovies(),
-            titles: ['Title', 'Genre', 'Stock', 'Rental rate'],
-            like: 'fa fa-heart-o'
+            titles: ['Title', 'Genre', 'Stock', 'Rental rate']
         };
 
     listStyle(){

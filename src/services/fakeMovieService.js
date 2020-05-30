@@ -17,6 +17,20 @@ const movies = [
     dailyRentalRate: 2.5
   },
   {
+    _id: "5b21ca3eeb7f6fbccd471816f",
+    title: "Die",
+    genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
+    numberInStock: 5,
+    dailyRentalRate: 2.5
+  },
+  {
+    _id: "5b21ca3eeb7f6fbccd471816g",
+    title: "Hard",
+    genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
+    numberInStock: 5,
+    dailyRentalRate: 2.5
+  },
+  {
     _id: "5b21ca3eeb7f6fbccd471817",
     title: "Get Out",
     genre: { _id: "5b21ca3eeb7f6fbccd471820", name: "Thriller" },

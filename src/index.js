@@ -6,9 +6,12 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import Movie from './movie/movie.js'
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <Movie />,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

@@ -8,6 +8,7 @@ import FilterList from './listgroup';
 import NavBar from '../util/navbar';
 import { NavLink } from 'react-router-dom';
 import MovieTable from './movie-table';
+import _ from 'lodash';
 
 export default class Movie extends Component{
   state = {
@@ -16,7 +17,8 @@ export default class Movie extends Component{
     titles: ['Title', 'Genre', 'Stock', 'Rental rate'],
     pageSize: 4,
     currentPage: 1,
-    filterList: []
+    filterList: [],
+    sort:{ sortItem: 'title', order:'asc'}
   };
 
   deleteMovie = (movie) =>{
@@ -46,6 +48,9 @@ export default class Movie extends Component{
     this.setState({ selectedGenre : genre, currentPage: 1});
   }
 
+  handleSort = (item) => {
+    this.setState({sort:{ sortItem: item }})
+  }
   render(){
     let { currentPage, pageSize, movieDetail, selectedGenre } = this.state;
     let filterList = selectedGenre && selectedGenre._id? 
@@ -57,7 +62,11 @@ export default class Movie extends Component{
             <FilterList filterResult = {this.filterResult} genres = { this.state.genres } selectedGenre = {this.state.selectedGenre} selectGenre = {this.handleGenre}/>
           </div>
           <div className='col'>
-            <MovieTable movies = {this.state} onDelete = {this.deleteMovie} onLike = {this.handleLike}/>
+            <MovieTable 
+              movies = {this.state}
+              onDelete = {this.deleteMovie} 
+              onLike = {this.handleLike}
+              onSort = {this.handleSort}/>
             <Pagination 
               currentPage = {currentPage}
               pageSize={pageSize} 

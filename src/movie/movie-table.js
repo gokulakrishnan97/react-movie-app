@@ -2,14 +2,19 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Like from '../common/like';
 import paginate from '../util/paginate';
+import _ from 'lodash';
+
 
 const MovieTable = (props) => {
-  let { movieDetail, currentPage, pageSize, selectedGenre, titles} = props.movies;
+  let { movieDetail, currentPage, pageSize, selectedGenre, titles, sort} = props.movies;
   const getHeadings = ()=> {
     return (
       <thead>
         <tr>
-          {titles.map((title)=> <th key = {title} className='m-4' style= {{ fontWeight: 'bold'}}> {title} </th>)}
+         <th  onClick = {() => props.onSort('title')} className='m-4' style= {{ fontWeight: 'bold'}}> Title </th>
+         <th  onClick = {() => props.onSort('genre.name')} className='m-4' style= {{ fontWeight: 'bold'}}> Genre </th>
+         <th  onClick = {() => props.onSort('numberInStock')} className='m-4' style= {{ fontWeight: 'bold'}}> Stock </th>
+         <th  onClick = {() => props.onSort('dailyRentalRate')} className='m-4' style= {{ fontWeight: 'bold'}}> Rental rate </th>
         </tr>
       </thead>
     );
@@ -36,7 +41,8 @@ const MovieTable = (props) => {
   const showMoviesList = () => {
     let filterList = selectedGenre && selectedGenre._id? 
     movieDetail.filter((m)=> m.genre.name === selectedGenre.name): movieDetail
-    let movies = paginate(filterList, currentPage, pageSize)
+    let sortedList = _.orderBy(filterList, sort.sortItem, sort.order)
+    let movies = paginate(sortedList, currentPage, pageSize)
     
     if(filterList.length <= 0){
       return <p> There is no movies in database</p>

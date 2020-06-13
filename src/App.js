@@ -5,7 +5,8 @@ import Movie from './movie/movie';
 import MovieDetail from './movie/movie-detail';
 import Rental from './rentals/rental';
 import Customer from './customers/customer';
-import {Switch, Route} from 'react-router-dom';
+import Form from './login/login-component';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import NavBar from './util/navbar';
 
 
@@ -16,11 +17,12 @@ function App() {
         <NavBar />
       </div>
       <Switch>
-        <Route path = '/movies/:id' component = {MovieDetail} />
-        <Route path = '/movies' component = {Movie} />
-        <Route path = '/customers' component = {Customer} />
-        <Route path = '/rentals' component = {Rental} />
-        
+        <Route path = '/movies/:id' component = { MovieDetail } />
+        <Route path = '/movies' component = { Movie } />
+        <Route path = '/customers' component = { Customer } />
+        <Route path = '/rentals' component = { Rental } />
+        <Route path = '/login' component = { Form } />
+        <Redirect from='/' to='/movies' />
       </Switch>
     </React.Fragment>
   );

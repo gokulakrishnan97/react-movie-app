@@ -59,7 +59,11 @@ export default class Movie extends Component{
       <div>
         <div className='container row m-4'>
           <div className='col-3'>
-            <FilterList filterResult = {this.filterResult} genres = { this.state.genres } selectedGenre = {this.state.selectedGenre} selectGenre = {this.handleGenre}/>
+            <FilterList 
+              filterResult = {this.filterResult} 
+              genres = { this.state.genres } 
+              selectedGenre = {this.state.selectedGenre} 
+              selectGenre = {this.handleGenre}/>
           </div>
           <div className='col'>
             <MovieTable 

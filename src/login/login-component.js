@@ -32,11 +32,27 @@ export default class Form extends Component{
     this.setState({ errors: errors || {} });
   }
 
-  handleChange = (e) => {
-    console.log(e.target.value);
+  validateInput(inp){
+    let errors = {};
+    if(inp.name === 'email' && inp.value.trim() === ''){
+      return 'Username is required';
+    }
+    if(inp.name === 'password' && inp.value.trim() === ''){
+      return 'Password is required';
+    }
+    return null;
+  }
+  handleChange = ({ target }) => {
+    let errors = {...this.state.errors};
+    let errorMessage = this.validateInput(target);
+    if(errorMessage){
+      errors[target.name] = errorMessage
+    }else {
+      delete errors[target.name]
+    }
     let account = {...this.state.account};
-    account[e.target.name] = e.target.value;
-    this.setState({ account });
+    account[target.name] = target.value;
+    this.setState({ account, errors });
   }
 
   render(){
@@ -45,7 +61,7 @@ export default class Form extends Component{
     <div>
       <form onSubmit={ this.handleSubmit }>
         <Login 
-          name="userName" 
+          name="email" 
           value = "email" 
           onHandleChange = { this.handleChange }
           errors = { errors.email }/>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { getMovies } from '.././services/fakeMovieService';
-import { getGenres } from '.././services/fakeGenreService';
+import { getMovies } from '.././services/movieService';
+import  GetGenres  from '.././services/genreService';
 import Like from '../common/like';
 import Pagination from '../common/pagination';
 import paginate from '../util/paginate';
@@ -55,6 +55,8 @@ export default class Movie extends Component{
     let { currentPage, pageSize, movieDetail, selectedGenre } = this.state;
     let filterList = selectedGenre && selectedGenre._id? 
       movieDetail.filter((m)=> m.genre.name === selectedGenre.name): movieDetail
+    console.log(this.state.genres);
+    console.log(this.state.movieDetail);
     return(
       <div>
         <div className='container row m-4'>
@@ -81,10 +83,14 @@ export default class Movie extends Component{
         </div> 
       );      
     }
-    componentDidMount(){
+    async componentDidMount(){
+      let genreResult = await GetGenres();
+      let movieResult = await getMovies();
+      let genres = genreResult.data;
+      let movies = movieResult.data;
       this.setState({ 
-        movieDetail: getMovies(), 
-        genres: getGenres(), 
+        movieDetail: movies, 
+        genres: genres, 
       })
     }
 

@@ -1,7 +1,8 @@
 import React, { Component  } from 'react';
 import Login from '../common/login';
+import { Auth } from '../service/auth';
 
-export default class Form extends Component{
+export default class LoginForm extends Component{
   
   constructor(props) {
    super();
@@ -9,7 +10,7 @@ export default class Form extends Component{
 
   state ={
     account:{
-      userName: "",
+      username: "",
       password: ""
     },
     errors:{}
@@ -26,8 +27,16 @@ export default class Form extends Component{
     }
     return Object.keys(errors).length === 0? null: errors;
   }
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(this.state.account);
+    let token = await Auth({
+        email: this.state.account.username,
+        password: this.state.account.password
+    })
+    console.log(token)
+    localStorage.setItem('token', token);
+   // window.location = "/"
     let errors = this.validateError();
     this.setState({ errors: errors || {} });
   }
@@ -61,13 +70,13 @@ export default class Form extends Component{
     <div>
       <form onSubmit={ this.handleSubmit }>
         <Login 
-          name="email" 
-          value = "email" 
+          name="username" 
+          value = "Username" 
           onHandleChange = { this.handleChange }
           errors = { errors.email }/>
         <Login 
           name="password" 
-          value = "password" 
+          value = "Password" 
           onHandleChange = { this.handleChange }
           errors = { errors.password } />
         {/* <div className="form-group">
